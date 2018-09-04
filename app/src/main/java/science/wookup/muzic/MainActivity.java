@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Send messages or runnable to handler
                 for (String song: Songs.songs) {
-                    Intent intent = new Intent(MainActivity.this, DownloadService.class);
+                    Intent intent = new Intent(MainActivity.this, DownloadIntentService.class);
                     intent.putExtra(KEY_SONG, song);
                     startService(intent);
                 }
