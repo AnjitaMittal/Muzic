@@ -16,12 +16,13 @@ public class DownloadService extends Service {
     @Override
     public void onCreate() {
         DownloadThread downloadThread = new DownloadThread();
-        downloadThread.setName("Download Thread");
+        downloadThread.setName("DownloadThread");
         downloadThread.start();
 
-        while (downloadThread.downloadHandler == null) {}
+        while (downloadThread.downloadHandler == null) { }
 
         downloadHandler = downloadThread.downloadHandler;
+        downloadHandler.setService(this);
     }
 
     @Override
@@ -29,7 +30,8 @@ public class DownloadService extends Service {
         String song = intent.getStringExtra(KEY_SONG);
         Message message = Message.obtain();
         message.obj = song;
-        downloadHandler.handleMessage(message);
+        message.arg1 = startId;
+        downloadHandler.sendMessage(message);
         return Service.START_REDELIVER_INTENT;
     }
 
